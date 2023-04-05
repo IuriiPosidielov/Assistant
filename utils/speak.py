@@ -6,7 +6,7 @@ import time
 import pyttsx3
 from pathlib import Path
 import utils.text
-
+import config
 
 def femaleVoice(text):
     print("Program : "+text)
@@ -16,11 +16,11 @@ def femaleVoice(text):
     engine.say(text)
     engine.runAndWait()
 
-def speak(text, lang='ru'):
+def speak(text):
     try:
         #translator = Translator()
         # text=translator.translate(text, dest=lang).text
-        tts = gTTS(text, lang=lang)
+        tts = gTTS(text, lang=config.language)
         mixer.init()
         sf = TemporaryFile()
         tts.write_to_fp(sf)
@@ -32,7 +32,7 @@ def speak(text, lang='ru'):
     except Exception:
         raise
 
-def speakchunks(text, lang='ru'):
+def speakchunks(text):
     print ("speak chunks")
     chunks = utils.text.splitText(text, 200)
     
@@ -44,7 +44,7 @@ def speakchunks(text, lang='ru'):
     else:
         speak(text)
 
-def speakchunksmultiple(text, lang='ru'):
+def speakchunksmultiple(text):
     print ("speak chunks multiple")
     chunks = utils.text.splitTextMultiple(text, 300)
     if len(chunks) > 1: 
@@ -56,14 +56,14 @@ def speakchunksmultiple(text, lang='ru'):
     else:
         speak(text)
 
-def saveandspeak(text, path, lang='ru'):
+def saveandspeak(text, path):
     try:
         path = path.replace(".txt", ".mp3")
         if Path(path).is_file():
             print ("wavfile" + path)
             play(path)
             return
-        play('thinking.mp3')
+        playthinking()
         tts = gTTS(text, lang=lang)
         tts.save(tts.save(path))
         play(path)

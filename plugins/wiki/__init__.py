@@ -2,6 +2,7 @@ import utils.fuzzy
 import wikipedia
 import utils.speak
 import utils.text
+import config
 
 def execute(text):
     hotword = utils.fuzzy.includeWord(["что такое", "кто такой", "кто такая", "кто такие", "что это", "кто это"], text)
@@ -9,7 +10,7 @@ def execute(text):
         text = text.replace(hotword, "").strip()
         if not text: return False
         utils.speak.playthinking()       
-        wikipedia.set_lang("ru")
+        wikipedia.set_lang(config.language)
         suggestion = wikipedia.search(text, results=1)    
         print(suggestion)
         if (suggestion):
