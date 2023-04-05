@@ -64,7 +64,7 @@ def saveandspeak(text, path):
             play(path)
             return
         playthinking()
-        tts = gTTS(text, lang=lang)
+        tts = gTTS(text, lang=config.language)
         tts.save(tts.save(path))
         play(path)
     except Exception:
@@ -99,9 +99,9 @@ def playlisten():
 def playthinking():
     play("sound/thinking.mp3")
 
-def waitandspeak(text, lang='ru'):
+def waitandspeak(text):
     try:
-        tts = gTTS(text, lang=lang)
+        tts = gTTS(text, lang=config.language)
         sf = TemporaryFile()
         tts.write_to_fp(sf)
         sf.seek(0)
