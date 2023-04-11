@@ -1,0 +1,20 @@
+  File "/home/pi/apps/Assistant/blue.sh", line 2
+    sleep 10
+           ^
+SyntaxError: invalid syntax
+  File "/home/pi/apps/Assistant/blue.sh", line 2
+    sleep 10
+           ^
+SyntaxError: invalid syntax
+  File "/home/pi/apps/Assistant/blue.sh", line 2
+    nohup python3 /home/pi/apps/Assistant/blue.sh &
+                ^
+SyntaxError: invalid syntax
+  File "/home/pi/apps/Assistant/blue.sh", line 2
+    nohup /usr/bin/python3 /home/pi/apps/Assistant/blue.sh &
+                                                           ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "/home/pi/apps/Assistant/blue.sh", line 2, in <module>
+    nohup /usr/bin/python3 /home/pi/apps/Assistant/blue.sh
+NameError: name 'nohup' is not defined

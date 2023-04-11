@@ -1,8 +1,10 @@
+import os
 import struct
 import pyaudio
 import pvporcupine
 import speech 
 import config
+
 
 # print(pvporcupine.KEYWORDS)
 def hotword_recognizer():

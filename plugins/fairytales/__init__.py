@@ -8,17 +8,15 @@ def execute(text):
     if hotword:
         text = text.replace(hotword, "").strip()
         if not text: return True            
-        path = "./tales"
+        path = "/home/pi/apps/Assistant/tales"
+        os.system("/usr/bin/killall mpv")
         print(os.listdir(path))
-        for file in os.listdir("./tales"):
+        for file in os.listdir("/home/pi/apps/Assistant/tales"):
             keyword = file.replace(".txt", "").strip()
             if (keyword in text):
                 pathToFile = os.path.join(path, file)
                 print(pathToFile)
                 with open(pathToFile, encoding = 'utf-8', mode = 'r') as f:
-                    #lines = f.readlines()
-                    #for line in lines:
-                    #    utils.speak.speak(line)
                     content = f.read()
                     print (content)
                     utils.speak.saveandspeak(content, pathToFile)           

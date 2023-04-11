@@ -1,0 +1,8 @@
+#!/bin/bash
+
+sleep 10
+
+nohup python3 /home/pi/apps/Assistant/blue.py &
+lxterminal -e '/home/'
+
+exit

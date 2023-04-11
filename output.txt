@@ -1,2 +1,6 @@
+Playing: https://www.youtube.com/watch?v=VnjdikpgR0E
  (+) Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-AO: [wasapi] 48000Hz stereo 2ch float
+AO: [pulse] 48000Hz stereo 2ch float
+
+
+Exiting... (Quit)

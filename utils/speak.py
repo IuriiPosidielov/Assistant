@@ -1,12 +1,14 @@
-#from googletrans import Translator
 from gtts import gTTS
-from pygame import mixer
-from tempfile import TemporaryFile
 import time
 import pyttsx3
 from pathlib import Path
 import utils.text
 import config
+from mpg123 import Mpg123, Out123
+from io import BytesIO
+from subprocess import Popen
+import os
+import psutil
 
 def femaleVoice(text):
     print("Program : "+text)
@@ -17,18 +19,16 @@ def femaleVoice(text):
     engine.runAndWait()
 
 def speak(text):
-    try:
-        #translator = Translator()
-        # text=translator.translate(text, dest=lang).text
+    try:	
         tts = gTTS(text, lang=config.language)
-        mixer.init()
-        sf = TemporaryFile()
-        tts.write_to_fp(sf)
-        sf.seek(0)
-        mixer.music.load(sf)
-        mixer.music.play()
-        #while mixer.music.get_busy():
-        #   time.sleep(1)
+        fp = BytesIO()
+        tts.write_to_fp(fp)
+        fp.seek(0)
+        mp3 = Mpg123()
+        mp3.feed(fp.read())
+        out = Out123()
+        for frame in mp3.iter_frames(out.start):
+            out.play(frame)
     except Exception:
         raise
 
@@ -40,19 +40,19 @@ def speakchunks(text):
         print("chunk 1: " + chunks[0])
         speak(chunks[0])
         print("chunk 2: " + chunks[1])        
-        waitandspeak(chunks[1])        
+        speak(chunks[1])        
     else:
         speak(text)
 
 def speakchunksmultiple(text):
     print ("speak chunks multiple")
-    chunks = utils.text.splitTextMultiple(text, 300)
+    chunks = utils.text.splitTextMultiple(text, 200)
     if len(chunks) > 1: 
         print("chunk 1: " + chunks[0])
         speak(chunks[0])
         for index in range(1, len(chunks) - 1):
             print("chunk: " + chunks[index])        
-            waitandspeak(chunks[index])        
+            speak(chunks[index])        
     else:
         speak(text)
 
@@ -86,28 +86,36 @@ def speakwithcaching(content):
 
 
 def play(file):
-    mixer.init()
-    mixer.music.load(file)
-    mixer.music.play()
+    Popen("/usr/bin/mpv " + file + " --no-video", shell=True)
 
 def playok():
-    play("sound/ok.mp3")
+    play(config.directoryPath + "/sound/ok.mp3")
 
 def playlisten():
-    play("sound/listen.mp3")
+    play(config.directoryPath + "/sound/listen.mp3")
 
 def playthinking():
-    play("sound/thinking.mp3")
+    play(config.directoryPath + "/sound/thinking.mp3")
+
+def waitMpgRunning():
+    try:
+        for proc in psutil.process_iter(attrs=['pid', 'name']):
+            if 'mpg123' in proc.info['name']:
+                return true
+    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        return false
+    return false
 
 def waitandspeak(text):
     try:
         tts = gTTS(text, lang=config.language)
-        sf = TemporaryFile()
+        sf = BytesIO()
         tts.write_to_fp(sf)
         sf.seek(0)
-        while mixer.music.get_busy():
-           time.sleep(1)
-        print("play")
-        play(sf)
+        mp3 = Mpg123()
+        mp3.feed(sf.read())
+        out = Out123()
+        for frame in mp3.iter_frames(out.start):
+            out.play(frame)
     except Exception:
         raise

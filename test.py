@@ -1,7 +1,9 @@
-import plugins.wiki
 import utils.speak
-
+import time
 #plugins.wiki.execute("что такое витамин с")
 #plugins.wiki.execute("кто такие динозавры")
+utils.speak.speak("что такое витамин с")
 
-utils.speak.play("sound/ok.mp3")
+time.sleep(10)
+
+time.sleep(10000)

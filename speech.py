@@ -1,8 +1,9 @@
+import os
 import speech_recognition as sp
 import hotword
-import os
 import importlib
 import utils.speak
+import config
 
 def speech_recognizer():
 	r = sp.Recognizer()
@@ -10,7 +11,7 @@ def speech_recognizer():
 	with sp.Microphone() as source:
 		print("Скажите что-нибудь")
 		utils.speak.playlisten()
-		r.adjust_for_ambient_noise(source, duration=0.2)
+		#r.adjust_for_ambient_noise(source, duration=0.2)
 		audio = r.listen(source)
 		# print (config.searchindex)
 		try:
@@ -18,7 +19,7 @@ def speech_recognizer():
 			txt = txt.lower()
 			print(txt)
 			# plugins
-			for moduleName in os.listdir("./plugins"):
+			for moduleName in os.listdir(config.directoryPath + "/plugins"):
 				command = importlib.import_module("plugins." + moduleName)
 				if (command.execute(txt)): break
 		except sp.UnknownValueError:
