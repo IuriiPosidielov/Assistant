@@ -21,6 +21,6 @@ def execute(text):
         for choice in response.choices:
             result += choice.message.content
 
-        utils.speak.speakchunks(result)
+        utils.speak.speakwithcaching(result)
         return True
     return False

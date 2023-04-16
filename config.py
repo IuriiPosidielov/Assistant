@@ -8,3 +8,4 @@ directoryPath = "/home/pi/apps/Assistant"
 # youtube search context
 search_results = []
 searchindex = 0
+playback = None

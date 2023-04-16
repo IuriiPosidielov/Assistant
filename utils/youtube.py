@@ -24,8 +24,10 @@ def play_music(path):
 
 def stop_music():
 	try:
-		print("stop")
 		os.system("/usr/bin/killall mpv")
+		if (config.playback):
+			config.playback.stop()
+		print("stop")
 	except Exception as e:
 		pass
 	

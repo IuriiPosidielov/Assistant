@@ -22,14 +22,19 @@ def splitText(sentence,chunkLength):
         lst.append(sentence)
         return lst      
      curlng = chunkLength
+     print ("curlng" + str(curlng) + " - " + str(len(sentence)))
      lst = []
      curlng = nearestDelimiter(sentence, curlng)
-     substr = (sentence[0 : curlng]).strip()
+     if curlng==0:
+          lst.append(sentence)
+          return lst
+     substr = (sentence[0 : curlng])
+     print ("curlng2" + str(curlng) + " - " + str(len(sentence)))
         
      lst.append(substr)
-     substr2 = (sentence[curlng : len(sentence)]).strip()
+     substr2 = sentence[curlng : len(sentence)]
      if substr2:
-        lst.append((sentence[curlng : len(sentence)]).strip())
+        lst.append(substr2)
      return lst
 
 def splitTextMultiple(sentence,chunkLength):

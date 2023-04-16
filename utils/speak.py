@@ -1,14 +1,19 @@
 from gtts import gTTS
+from io import BytesIO
+from tempfile import TemporaryFile
 import time
 import pyttsx3
 from pathlib import Path
 import utils.text
 import config
-from mpg123 import Mpg123, Out123
-from io import BytesIO
 from subprocess import Popen
-import os
-import psutil
+
+from pydub import AudioSegment
+from pydub.playback import play
+from pydub import generators
+from pydub.playback import _play_with_simpleaudio
+import simpleaudio
+
 
 def femaleVoice(text):
     print("Program : "+text)
@@ -19,16 +24,28 @@ def femaleVoice(text):
     engine.runAndWait()
 
 def speak(text):
-    try:	
+    try:
+        print(text)
         tts = gTTS(text, lang=config.language)
         fp = BytesIO()
         tts.write_to_fp(fp)
         fp.seek(0)
-        mp3 = Mpg123()
-        mp3.feed(fp.read())
-        out = Out123()
-        for frame in mp3.iter_frames(out.start):
-            out.play(frame)
+        song = AudioSegment.from_file(fp, format="mp3")
+
+        config.playback = _play_with_simpleaudio(song)
+    except Exception:
+        raise
+
+def waitandspeak(text):
+    try:
+        tts = gTTS(text, lang=config.language)
+        fp = BytesIO()
+        tts.write_to_fp(fp)
+        fp.seek(0)
+        song = AudioSegment.from_file(fp, format="mp3")
+        if (config.playback):
+            config.playback.wait_done()
+        config.playback = _play_with_simpleaudio(song)
     except Exception:
         raise
 
@@ -36,23 +53,25 @@ def speakchunks(text):
     print ("speak chunks")
     chunks = utils.text.splitText(text, 200)
     
-    if len(chunks) > 1: 
+    if len(chunks) > 1:
+        print("2 chunks") 
         print("chunk 1: " + chunks[0])
         speak(chunks[0])
         print("chunk 2: " + chunks[1])        
-        speak(chunks[1])        
+        waitandspeak(chunks[1])        
     else:
+        print ("1 chunk")
         speak(text)
 
 def speakchunksmultiple(text):
     print ("speak chunks multiple")
-    chunks = utils.text.splitTextMultiple(text, 200)
+    chunks = utils.text.splitTextMultiple(text, 300)
     if len(chunks) > 1: 
         print("chunk 1: " + chunks[0])
         speak(chunks[0])
         for index in range(1, len(chunks) - 1):
             print("chunk: " + chunks[index])        
-            speak(chunks[index])        
+            waitandspeak(chunks[index])        
     else:
         speak(text)
 
@@ -96,26 +115,3 @@ def playlisten():
 
 def playthinking():
     play(config.directoryPath + "/sound/thinking.mp3")
-
-def waitMpgRunning():
-    try:
-        for proc in psutil.process_iter(attrs=['pid', 'name']):
-            if 'mpg123' in proc.info['name']:
-                return true
-    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-        return false
-    return false
-
-def waitandspeak(text):
-    try:
-        tts = gTTS(text, lang=config.language)
-        sf = BytesIO()
-        tts.write_to_fp(sf)
-        sf.seek(0)
-        mp3 = Mpg123()
-        mp3.feed(sf.read())
-        out = Out123()
-        for frame in mp3.iter_frames(out.start):
-            out.play(frame)
-    except Exception:
-        raise

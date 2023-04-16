@@ -1,9 +1,17 @@
+from gtts import gTTS
 import utils.speak
+import plugins.zgpt
 import time
-#plugins.wiki.execute("что такое витамин с")
-#plugins.wiki.execute("кто такие динозавры")
-utils.speak.speak("что такое витамин с")
+import os
+import config
+import tempfile
+import simpleaudio as sa
+import tempfile
+import wave
 
-time.sleep(10)
+#utils.speak.speak ("кто такие динозавры")
+#как приготовить расскажи как приготовить салат оливье
 
-time.sleep(10000)
+time.sleep(1)
+utils.speak.waitandspeak ("кто такие динозавры")
+time.sleep(2)
