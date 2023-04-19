@@ -1,6 +1,6 @@
 # Assistant
 
-Linux version of Assistant (tested on Raspbery Pi)
+Linux version of Assistant (tested on Raspbery Pi, Ubuntu)
 
 sudo apt install portaudio19-dev
 
