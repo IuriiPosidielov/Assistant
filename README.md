@@ -21,6 +21,6 @@ put
 @lxterminal -e python /home/pi/apps/Assistant/main.py     # start application in the terminal
 
 
-blue.sh - contains id of bluetooth device (put your device)
+blue.sh - contains address of bluetooth device (put your device)
 
 
