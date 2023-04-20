@@ -23,4 +23,9 @@ put
 
 blue.sh - contains address of bluetooth device (put your device)
 
+Add user to group:
+sudo gpasswd -a pi bluetooth
+sudo gpasswd -a pi audio
+
+
 
