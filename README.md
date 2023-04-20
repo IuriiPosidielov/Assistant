@@ -6,6 +6,8 @@ sudo apt install portaudio19-dev
 
 sudo apt install mpv
 
+sudo apt install flac
+
 pip install pyaudio simpleaudio wikipedia openai pydub pyttsx3 gtts speechrecognition pvporcupine
 
 Install youtube-dl:
