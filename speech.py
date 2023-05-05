@@ -12,7 +12,7 @@ def speech_recognizer():
 		print("Скажите что-нибудь")
 		utils.speak.playlisten()
 		#r.adjust_for_ambient_noise(source, duration=0.2)
-		audio = r.listen(source)
+		audio = r.listen(source, 5, 5)
 		# print (config.searchindex)
 		try:
 			txt = r.recognize_google(audio, language="ru-RU")

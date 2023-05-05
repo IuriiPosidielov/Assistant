@@ -1,5 +1,4 @@
 hotword_access_key = ""
-
 chatgpt_key = ""
 
 hotword_keywords = ['bumblebee', 'ok google', 'computer', 'terminator']
@@ -9,3 +8,9 @@ directoryPath = "/home/pi/apps/Assistant"
 search_results = []
 searchindex = 0
 playback = None
+# chatgpt context
+question = []
+answer = []
+
+# context for kidpuzzle
+PuzzleAnswer = ""
