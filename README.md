@@ -15,6 +15,7 @@ download from github youtube-dl
 sudo apt install pandoc
 make
 copy youtube-dl to /usr/bin
+fix for uploader_id bug: https://stackoverflow.com/questions/75495800/error-unable-to-extract-uploader-id-youtube-discord-py
 
 Autostart:
 At the end of /home/pi/apps/.config/lxsession/LXDE-pi/autostart
